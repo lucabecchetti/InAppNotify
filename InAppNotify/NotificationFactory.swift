@@ -319,8 +319,11 @@ open class NotificationFactory: UIView,UITextViewDelegate {
             maincontroller = controller
         }
         
+        //Move view to top
+        self.layer.zPosition = CGFloat(controller.view.subviews.count+1)
+        
         //Append notitication to a passed controller
-        controller.view.addSubview(self)
+        maincontroller?.view.addSubview(self)
         
         //Set initial size to 100% with and 0 height
         let width = UIScreen.main.bounds.width
