@@ -26,8 +26,8 @@ s.source = { :git => "https://github.com/lucabecchetti/InAppNotify.git", :tag =>
 s.framework = "UIKit"
 
 # 8
-s.source_files = "InAppNotify/**/*.{swift}"
+s.source_files = "InAppNotify/*.{swift}"
 
 # 9
-s.resources = "InAppNotify/**/*.{png,jpeg,jpg,storyboard,xib}"
+#s.resources = "InAppNotify/*.{png,jpeg,jpg,storyboard,xib}"
 end
