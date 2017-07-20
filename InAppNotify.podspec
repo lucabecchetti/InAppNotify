@@ -8,7 +8,7 @@ s.summary = "Swift library to manage in app notification in swift language, like
 s.requires_arc = true
 
 # 2
-s.version = "0.1.0"
+s.version = "0.1.1"
 
 # 3
 s.license = { :type => "MIT", :file => "LICENSE" }
