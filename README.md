@@ -1,3 +1,4 @@
+# InAppNotify
 <p align="center" >
   <img src="https://user-images.githubusercontent.com/16253548/28424204-4c36af46-6d6d-11e7-95df-0cb4582093d7.png" width=400px alt="InAppNotify" title="InAppNotify">
 </p>
@@ -51,6 +52,126 @@ Then, run the following command:
 ```bash
 $ pod install
 ```
+
+## How to use
+
+First of all import library in your project
+
+```swift
+import InAppNotify
+```
+
+The basic code to show a simple notification is:
+
+```swift
+//In you are in a UIViewController
+InAppNotify.Show(Announcement(title: "Hello world! my first example!"), to: self)
+```
+
+### InAppNotify.Show method
+
+This is a static method used to present a notitication, it takes two parameters, first is an instance of Announcement object, the second is a subclass of UIViewController
+
+### Create announcement object
+
+This library can show only an instance of "Announcement" object, you can pass many parameters to his initializer:
+
+```swift
+let announce = Announcement(
+      //Title, the first line
+      title           : "I am titile",
+      //Subtitle, the second line
+      subtitle        : "I am subititle",
+      //Image local, show if no urlImage is set
+      image           : UIImage(named: "test"),
+      //URL of remote image
+      urlImage        : "https://.....",
+      //Seconds before disappear
+      duration        : 3,
+      //Interaction type. none or text
+      interactionType : InteractionType.none,
+      //Pass data to annoucement
+      userInfo        : ["id" : 10],
+      //Action callback
+      action: { (type, string, announcement) in
+                
+            //You can detect the action by test "type" var     
+            if type == CallbackType.tap{
+                  print("User has been tapped")
+            }else if type == CallbackType.text{
+                  print("Reply from notification: \(string!)")
+            }else{
+                  print("Notification has been closed!")
+            }
+      }
+            
+)
+```
+
+### Present announcement object
+When object is created you can present it with this code:
+
+```swift
+//In you are in a UIViewController
+InAppNotify.Show(announce, to: self)
+```
+
+### Interact with notification
+
+When you create an announcement, you can interact with it passed an action callback:
+
+```swift
+action: { (type, string, announcement) in
+                
+  //You can detect the action by test "type" var     
+  if type == CallbackType.tap{
+    print("User has been tapped")
+  }else if type == CallbackType.text{
+    print("Reply from notification: \(string!)")
+  }else{
+    print("Notification has been closed!")
+  }
+  
+}
+```
+
+From the callbacak you can access the announcement object that has been triggered this method, announcement has a particolar attribute called "userInfo" (it's of type "Any") that you can set when create object, and read here.
+
+### Customization
+
+InAppNotify supports themes, by default we have two themes, accessibile from "Themes" class:
+
+- Themes.dark
+- Themes.light
+
+To use a theme you have to set a global variable of the library, example:
+
+```swift
+//Set dark theme
+InAppNotify.theme = Themes.dark
+```
+
+Of course, you can create your custom theme programmatically, here an example:
+
+```swift
+//Create and use a custom theme
+InAppNotify.theme = Theme(
+      titleFont                   : UIFont.boldSystemFont(ofSize: 18),
+      subtitleFont                : UIFont.systemFont(ofSize: 13),
+      backgroundColor             : UIColor(red:0.90, green:0.58, blue:0.15, alpha:1.00),
+      dragIndicatorColor          : UIColor(red:0.95, green:0.80, blue:0.19, alpha:1.00),
+      titleColor                  : UIColor.white,
+      subtitleColor               : UIColor.white,
+      shadowColor                 : UIColor.darkGray.cgColor,
+      inputTextBackgroundColor    : UIColor(red:0.95, green:0.80, blue:0.19, alpha:1.00),
+      inputTextColor              : UIColor.white,
+      sendButtonHighlightedColor  : UIColor.darkGray,
+      sendButtonNormalColor       : UIColor.black,
+      separatorLineColor          : UIColor.black
+)
+```
+
+
 ## Credits & License
 InAppNotify is owned and maintained by [Luca Becchetti](https://github.com/lucabecchetti) 
 
