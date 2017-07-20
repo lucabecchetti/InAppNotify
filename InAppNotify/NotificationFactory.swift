@@ -311,8 +311,13 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     /// - Parameter controller: UIViewController where append announcement
     open func show(to controller: UIViewController) {
         
-        //Set this as main controller
-        maincontroller = controller
+        //Test if controller has navigation controller
+        if let parentNavigation = controller.navigationController{
+            maincontroller = parentNavigation
+        }else{
+            //Set this as main controller
+            maincontroller = controller
+        }
         
         //Append notitication to a passed controller
         controller.view.addSubview(self)
