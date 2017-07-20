@@ -64,7 +64,7 @@ import InAppNotify
 The basic code to show a simple notification is:
 
 ```swift
-//In you are in a UIViewController
+//If you are in a UIViewController
 InAppNotify.Show(Announcement(title: "Hello world! my first example!"), to: self)
 ```
 
@@ -112,7 +112,7 @@ let announce = Announcement(
 When object is created you can present it with this code:
 
 ```swift
-//In you are in a UIViewController
+//If you are in a UIViewController
 InAppNotify.Show(announce, to: self)
 ```
 
