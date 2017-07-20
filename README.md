@@ -1,4 +1,4 @@
-# InAppNotify
+# InAppNotify - Manage in App notification
 <p align="center" >
   <img src="https://user-images.githubusercontent.com/16253548/28424204-4c36af46-6d6d-11e7-95df-0cb4582093d7.png" width=400px alt="InAppNotify" title="InAppNotify">
 </p>
