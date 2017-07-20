@@ -24,7 +24,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     open fileprivate(set) lazy var backgroundView: UIView = {
         
         let view = UIView()
-        view.backgroundColor = ColorTheme.Dark.background
+        view.backgroundColor = InAppNotify.theme.backgroundColor
         view.alpha           = 0.8
         view.clipsToBounds   = true
         return view
@@ -47,7 +47,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     open fileprivate(set) lazy var indicatorView: UIView = {
         
         let view = UIView()
-        view.backgroundColor            = ColorTheme.Dark.dragIndicator
+        view.backgroundColor            = InAppNotify.theme.dragIndicatorColor
         view.layer.cornerRadius         = NotificationSize.indicatorHeight / 2
         view.isUserInteractionEnabled   = true
         return view
@@ -71,8 +71,8 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     open fileprivate(set) lazy var titleLabel: UILabel = {
         
         let label           = UILabel()
-        label.font          = FontTheme.Dark.title
-        label.textColor     = ColorTheme.Dark.title
+        label.font          = InAppNotify.theme.titleFont
+        label.textColor     = InAppNotify.theme.titleColor
         label.numberOfLines = 1
         return label
         
@@ -83,8 +83,8 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     open fileprivate(set) lazy var subtitleLabel: UILabel = {
         
         let label           = UILabel()
-        label.font          = FontTheme.Dark.subtitle
-        label.textColor     = ColorTheme.Dark.subtitle
+        label.font          = InAppNotify.theme.subtitleFont
+        label.textColor     = InAppNotify.theme.subtitleColor
         label.numberOfLines = 1
         return label
         
@@ -97,9 +97,9 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         let button       = UIButton()
         button.isEnabled = false
         
-        button.setTitle("send", for: UIControlState())
-        button.setTitleColor(UIColor.white, for: UIControlState())
-        button.setTitleColor(UIColor.lightGray, for: .highlighted)
+        button.setTitle(InAppNotify.sendString, for: UIControlState())
+        button.setTitleColor(InAppNotify.theme.sendButtonNormalColor, for: UIControlState())
+        button.setTitleColor(InAppNotify.theme.sendButtonHighlightedColor, for: .highlighted)
         return button
     }()
     
@@ -108,12 +108,20 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         let txf             = UITextView()
         txf.alpha           = 1
-        txf.backgroundColor = UIColor(red:0.57, green:0.57, blue:0.57, alpha:1)
-        txf.textColor       = UIColor.white
+        txf.backgroundColor = InAppNotify.theme.inputTextBackgroundColor
+        txf.textColor       = InAppNotify.theme.inputTextColor
         txf.isScrollEnabled = true;
         txf.font            = .systemFont(ofSize: 16)
         return txf
         
+    }()
+    
+    /// Lazy view for line separator
+    open fileprivate(set) lazy var lineSeparator: UIView = {
+        var line = UIView()
+        line.tag = 1000
+        line.backgroundColor = InAppNotify.theme.separatorLineColor
+        return line
     }()
     
     /// Lazy gesture for tap in notification
@@ -175,7 +183,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         //Define settings
         clipsToBounds               = false
         isUserInteractionEnabled    = true
-        layer.shadowColor           = ColorTheme.Dark.shadowColor
+        layer.shadowColor           = InAppNotify.theme.shadowColor
         layer.shadowOffset          = CGSize(width: 0, height: 0.5)
         layer.shadowOpacity         = 0.1
         layer.shadowRadius          = 0.5
@@ -271,7 +279,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         //Set image if needed
         if(announcement.urlImage != nil && announcement.urlImage! != ""){
-            //imageView.kf.setImage(with:URL(string:announcement.urlImage!), placeholder: UIImage(named: "user_blank")!)
+            imageView.setImageFromURL(stringImageUrl: announcement.urlImage!)
         }else{
             imageView.image = announcement.image
         }
@@ -365,6 +373,9 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     
     func orientationDidChange() {
         setupFramesAndPositionViews()
+        if openedToReply {
+            setupTextInteractionFrame()
+        }
     }
     
     
@@ -420,6 +431,46 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     }
     
     
+    /// Function used to resize and position views for user interaction
+    private func setupTextInteractionFrame(){
+        
+        //Adjust frame size to all screen
+        frame.size.height = UIScreen.main.bounds.size.height
+        
+        subtitleLabel.numberOfLines = 5
+        subtitleLabel.sizeToFit()
+        
+        self.backgroundView.frame.size.height   = self.frame.height
+        self.gestureContainer.frame.origin.y    = self.frame.height - 20
+        self.indicatorView.frame.origin.y       = self.frame.height - NotificationSize.indicatorHeight - 5
+        
+        //Check if separator exists
+        var line:UIView?                        = self.viewWithTag(1000)
+        if line == nil{
+            line = lineSeparator
+            self.addSubview(line!)
+        }
+        
+        //Set correct frame
+        line!.frame = CGRect(
+            x: 0,
+            y: max(imageView.frame.origin.y+imageView.frame.size.height,subtitleLabel.frame.origin.y+subtitleLabel.frame.size.height) + 8,
+            width: totalWidth,
+            height: 0.5
+        )
+        
+        //Align elements
+        let topy            = line!.frame.origin.y + max(subtitleLabel.frame.size.height, 10)
+        inputText.frame     = CGRect(x: 10, y: topy, width: totalWidth-25-buttonSend.frame.size.width, height: 35)
+        buttonSend.frame    = CGRect(x: inputText.frame.size.width+15, y: topy, width: buttonSend.frame.size.width, height: 35)
+        buttonSend.isHidden = false
+        inputText.isHidden  = false
+        
+        //Show keyboard
+        inputText.becomeFirstResponder()
+        
+    }
+    
     /// Called when user pan up or down on a notification
     @objc fileprivate func handlePanGestureRecognizer() {
         
@@ -434,28 +485,12 @@ open class NotificationFactory: UIView,UITextViewDelegate {
                 if interactionType == InteractionType.inputText{
                     if(openedToReply){ return }
                     openedToReply = true
-                    subtitleLabel.numberOfLines = 5
-                    subtitleLabel.sizeToFit()
-
-                    let line:UIView = UIView(frame: CGRect(x: 0,y: max(imageView.frame.origin.y+imageView.frame.size.height,subtitleLabel.frame.origin.y+subtitleLabel.frame.size.height) + 5,width: totalWidth,height: 0.5))
-                    line.backgroundColor = UIColor.white
-                    self.addSubview(line)
-                    
-                    let topy = line.frame.origin.y + max(subtitleLabel.frame.size.height, 10)
-                    inputText.frame = CGRect(x: 10, y: topy, width: totalWidth-25-buttonSend.frame.size.width, height: 35)
-                    buttonSend.frame = CGRect(x: inputText.frame.size.width+15, y: topy, width: buttonSend.frame.size.width, height: 35)
-                    
-
-                    
-                    frame.size.height = UIScreen.main.bounds.size.height
+                    setupTextInteractionFrame()
                     if maincontroller != nil && maincontroller!.tabBarController != nil{
                         preVisibileBar = maincontroller!.tabBarController!.tabBar.isHidden
                     }
                     maincontroller?.tabBarController?.tabBar.isHidden = true
                     
-                    buttonSend.isHidden = false
-                    inputText.isHidden = false
-                    inputText.becomeFirstResponder()
                 }else{
                     frame.size.height = NotificationSize.height + 12 + (translation.y) / 25
                 }
@@ -463,12 +498,10 @@ open class NotificationFactory: UIView,UITextViewDelegate {
             } else {
                 frame.size.height = NotificationSize.height + translation.y
             }
-        } else {
-            if (!openedToReply){
+        } else if (!openedToReply){
                 
                 panGestureActive = false
                 let height = translation.y < -5 || canHide ? 0 : NotificationSize.height
-                
                 duration = 0.2
                 UIView.animate(withDuration: duration, animations: {
                     self.frame.size.height = height
@@ -478,7 +511,6 @@ open class NotificationFactory: UIView,UITextViewDelegate {
                     self.displayTimer.invalidate()
                 }})
                 
-            }
         }
         
         //Animate view
