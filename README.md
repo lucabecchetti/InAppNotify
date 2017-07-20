@@ -121,6 +121,7 @@ InAppNotify.Show(announce, to: self)
 When you create an announcement, you can interact with it passed an action callback:
 
 ```swift
+//Inside initialization of announcement
 action: { (type, string, announcement) in
                 
   //You can detect the action by test "type" var     
@@ -136,6 +137,28 @@ action: { (type, string, announcement) in
 ```
 
 From the callbacak you can access the announcement object that has been triggered this method, announcement has a particolar attribute called "userInfo" (it's of type "Any") that you can set when create object, and read here.
+
+If you want to enable a textField interaction when pull down notification, pass this parameter to announcement object:
+
+```swift
+//Inside initialization of announcement
+interactionType : InteractionType.text,
+```
+
+This will present a textArea where user can write! to modify the text button ("send" by default) use this code:
+
+```swift
+InAppNotify.sendString = "Send"
+```
+
+To read user input, if you have set an action callback, test if the type is "text" and access string variable:
+
+```swift
+//Inside callback
+if type == CallbackType.text{
+    print("Reply from notification: \(string!)")
+}
+```
 
 ### Customization
 
