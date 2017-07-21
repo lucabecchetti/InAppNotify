@@ -8,7 +8,7 @@
 During develop of my app [Frind](http://www.frind.it), I needed to manage in app notifications like whatsapp or telegram, but i didn't find nothing that liked me, so, i created this library. Choose InAppNotify for your next project, I'll be happy to give you a little help!
 
 <p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
-<p align="center" >Created by <a href="https://github.com/lucabecchetti">Luca Becchetti</a></p>
+<p align="center" >Created by <a href="http://www.lucabecchetti.com">Luca Becchetti</a></p>
 
 
 ## Screenshots
@@ -201,7 +201,7 @@ InAppNotify.theme = Theme(
 I'm interested in making a list of all projects which use this library. Feel free to open an Issue on GitHub with the name and links of your project; we'll add it to this site.
 
 ## Credits & License
-InAppNotify is owned and maintained by [Luca Becchetti](https://github.com/lucabecchetti) 
+InAppNotify is owned and maintained by [Luca Becchetti](http://www.lucabecchetti.com) 
 
 As open source creation any help is welcome!
 
@@ -210,7 +210,7 @@ The code of this library is licensed under MIT License; you can use it in commer
 The only requirement is to add a line in your Credits/About section with the text below:
 
 ```
-In app notification by InAppNotify - https://github.com/lucabecchetti
+In app notification by InAppNotify - http://www.lucabecchetti.com
 Created by Becchetti Luca and licensed under MIT License.
 ```
 ## About me
