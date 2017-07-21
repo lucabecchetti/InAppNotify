@@ -213,5 +213,16 @@ The only requirement is to add a line in your Credits/About section with the tex
 In app notification by InAppNotify - https://github.com/lucabecchetti
 Created by Becchetti Luca and licensed under MIT License.
 ```
+## About me
 
+I am a professional programmer with a background in software design and development, currently developing my qualitative skills on a startup company named "[Frind](https://www.frind.it) " as Project Manager and ios senior software engineer.
 
+I'm high skilled in Software Design (10+ years of experience), i have been worked since i was young as webmaster, and i'm a senior Php developer. In the last years i have been worked hard with mobile application programming, Swift for ios world, and Java for Android world.
+
+I'm an expert mobile developer and architect with several years of experience of team managing, design and development on all the major mobile platforms: iOS, Android (3+ years of experience).
+
+I'm also has broad experience on Web design and development both on client and server side and API /Networking design. 
+
+All my last works are hosted on AWS Amazon cloud, i'm able to configure a netowrk, with Unix servers. For my last works i configured apache2, ssl, ejabberd in cluster mode, Api servers with load balancer, and more.
+
+I live in Assisi (Perugia), a small town in Italy, for any question, [contact me](mailto:luca.becchetti@brokenice.it)
