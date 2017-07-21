@@ -193,7 +193,12 @@ InAppNotify.theme = Theme(
       separatorLineColor          : UIColor.black
 )
 ```
+## Projects using InAppNotify
 
+- Frind - [www.frind.it](https://www.frind.it) 
+
+### Your App and InAppNotify
+I'm interested in making a list of all projects which use this library. Feel free to open an Issue on GitHub with the name and links of your project; we'll add it to this site.
 
 ## Credits & License
 InAppNotify is owned and maintained by [Luca Becchetti](https://github.com/lucabecchetti) 
@@ -209,5 +214,4 @@ In app notification by InAppNotify - https://github.com/lucabecchetti
 Created by Becchetti Luca and licensed under MIT License.
 ```
 
-## Your App and InAppNotify
-I'm interested in making a list of all projects which use this library. Feel free to open an Issue on GitHub with the name and links of your project; we'll add it to this site.
+
