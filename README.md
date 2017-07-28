@@ -25,6 +25,21 @@ During develop of my app [Frind](http://www.frind.it), I needed to manage in app
   - iOS 8+
   - swift 3.0
   
+## Main features
+Here's a highlight of the main features you can find in SwiftMultiSelect:
+* **Multiple orientation** We support `portrait` and `landscape` orientation
+* **Fully customizable**. You can customize all programmatically  
+* **Swipe gesture** Up to dismiss, or down to show reply text field
+
+## You also may like
+
+Do you like `InAppNotify`? I'm also working on several other opensource libraries.
+
+Take a look here:
+
+* **[SwiftMultiSelect](https://github.com/lucabecchetti/SwiftMultiSelect)** - Manage in app notifications
+* **[SwiftMulticastProtocol](https://github.com/lucabecchetti/SwiftMulticastProtocol)** - send message to multiple classes
+
 ## Installation with CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like InAppNotify in your projects. You can install it with the following command:
