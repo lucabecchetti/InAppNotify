@@ -7,7 +7,7 @@
 
 During develop of my app [Frind](http://www.frind.it), I needed to manage in app notifications like whatsapp or telegram, but i didn't find nothing that liked me, so, i created this library. Choose InAppNotify for your next project, I'll be happy to give you a little help!
 
-<p align="center" >★★ <b>Star our github repository to help us!</b> ★★</p>
+<p align="center" >★★ <b>Star our github repository to help us!, or <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BZD2RPBADPA6G" target="_blank"> ☕ pay me a coffee</a></b> ★★</p>
 <p align="center" >Created by <a href="http://www.lucabecchetti.com">Luca Becchetti</a></p>
 
 
