@@ -26,7 +26,7 @@ During develop of my app [Frind](http://www.frind.it), I needed to manage in app
   - swift 3.0
   
 ## Main features
-Here's a highlight of the main features you can find in SwiftMultiSelect:
+Here's a highlight of the main features you can find in InAppNotify:
 * **Multiple orientation** We support `portrait` and `landscape` orientation
 * **Fully customizable**. You can customize all programmatically  
 * **Swipe gesture** Up to dismiss, or down to show reply text field
