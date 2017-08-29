@@ -37,7 +37,8 @@ Do you like `InAppNotify`? I'm also working on several other opensource librarie
 
 Take a look here:
 
-* **[SwiftMultiSelect](https://github.com/lucabecchetti/SwiftMultiSelect)** - Manage in app notifications
+* **[CountriesViewController](https://github.com/lucabecchetti/CountriesViewController)** - Countries selection view
+* **[SwiftMultiSelect](https://github.com/lucabecchetti/SwiftMultiSelect)** - Generic multi selection tableview
 * **[SwiftMulticastProtocol](https://github.com/lucabecchetti/SwiftMulticastProtocol)** - send message to multiple classes
 
 ## Installation with CocoaPods
