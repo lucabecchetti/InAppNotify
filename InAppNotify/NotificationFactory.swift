@@ -171,6 +171,8 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         }
     }
     
+    var rotated:Bool = false
+    
     // MARK: - Initializers
     
     public override init(frame: CGRect) {
@@ -301,7 +303,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         displayTimer = Timer.scheduledTimer(timeInterval: announcement.duration,target: self, selector: #selector(self.displayTimerDidFire), userInfo: nil, repeats: false)
         
         //Setup and position views
-        setupFramesAndPositionViews()
+        setupFramesAndPositionViews(currentWidth: totalWidth, currentHeight: totalHeight)
         
     }
     
@@ -339,16 +341,16 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     }
     
     /// Function used to resize and position views
-    open func setupFramesAndPositionViews() {
+    open func setupFramesAndPositionViews(currentWidth:CGFloat,currentHeight:CGFloat) {
         
         //Get current offset based on statusbar
         let offset: CGFloat = UIApplication.shared.isStatusBarHidden ? 2.5 : 5
         
         //Adjust objects frame
-        backgroundView.frame.size   = CGSize(width: totalWidth, height: NotificationSize.height)
-        gestureContainer.frame      = CGRect(x: 0, y: 0, width: totalWidth, height: totalHeight)
+        backgroundView.frame.size   = CGSize(width: currentWidth, height: NotificationSize.height)
+        gestureContainer.frame      = CGRect(x: 0, y: 0, width: currentWidth, height: currentHeight)
         indicatorView.frame         = CGRect(
-            x       : (totalWidth - NotificationSize.indicatorWidth) / 2,
+            x       : (currentWidth - NotificationSize.indicatorWidth) / 2,
             y       : NotificationSize.height - NotificationSize.indicatorHeight - 5,
             width   : NotificationSize.indicatorWidth,
             height  : NotificationSize.indicatorHeight
@@ -374,16 +376,23 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         [titleLabel, subtitleLabel].forEach { $0.frame.size.width = totalWidth - NotificationSize.imageSize - (NotificationSize.imageOffset * 2) }
         
+       
     }
     
     
     // MARK: - Handling screen orientation
     
     func orientationDidChange() {
-        setupFramesAndPositionViews()
+        rotated = true
+        
+        /// Get fixed size
+        let(currentWidth,currentHeight) = getCorrectHeigthAndWidth()
+        
+        setupFramesAndPositionViews(currentWidth: currentWidth,currentHeight: currentHeight)
         if openedToReply {
-            setupTextInteractionFrame()
+            setupTextInteractionFrame(currentWidth: currentWidth,currentHeight: currentHeight)
         }
+        rotated = false
     }
     
     
@@ -439,11 +448,26 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     }
     
     
+    /// Workaround: On ipad the new size do not change inside rotation notification
+    ///
+    /// - Returns: CGFloat,CGFloat
+    private func getCorrectHeigthAndWidth() -> (CGFloat, CGFloat){
+
+        var currentWidth    = totalWidth
+        var currentHeight   = totalHeight
+        if rotated && backgroundView.frame.size.width == currentWidth{
+            currentWidth = totalHeight
+            currentHeight = totalWidth
+        }
+        return (currentWidth, currentHeight)
+        
+    }
+    
     /// Function used to resize and position views for user interaction
-    private func setupTextInteractionFrame(){
+    private func setupTextInteractionFrame(currentWidth:CGFloat,currentHeight:CGFloat){
         
         //Adjust frame size to all screen
-        frame.size.height = UIScreen.main.bounds.size.height
+        frame.size.height = currentHeight
         
         subtitleLabel.numberOfLines = 5
         subtitleLabel.sizeToFit()
@@ -463,13 +487,13 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         line!.frame = CGRect(
             x: 0,
             y: max(imageView.frame.origin.y+imageView.frame.size.height,subtitleLabel.frame.origin.y+subtitleLabel.frame.size.height) + 8,
-            width: totalWidth,
+            width: currentWidth,
             height: 0.5
         )
         
         //Align elements
         let topy            = line!.frame.origin.y + max(subtitleLabel.frame.size.height, 10)
-        inputText.frame     = CGRect(x: 10, y: topy, width: totalWidth-25-buttonSend.frame.size.width, height: 35)
+        inputText.frame     = CGRect(x: 10, y: topy, width: currentWidth-25-buttonSend.frame.size.width, height: 35)
         buttonSend.frame    = CGRect(x: inputText.frame.size.width+15, y: topy, width: buttonSend.frame.size.width, height: 35)
         buttonSend.isHidden = false
         inputText.isHidden  = false
@@ -493,7 +517,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
                 if interactionType == InteractionType.inputText{
                     if(openedToReply){ return }
                     openedToReply = true
-                    setupTextInteractionFrame()
+                    setupTextInteractionFrame(currentWidth: totalWidth,currentHeight: totalHeight)
                     if maincontroller != nil && maincontroller!.tabBarController != nil{
                         preVisibileBar = maincontroller!.tabBarController!.tabBar.isHidden
                     }
