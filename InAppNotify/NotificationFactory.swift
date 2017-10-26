@@ -382,7 +382,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     
     // MARK: - Handling screen orientation
     
-    func orientationDidChange() {
+    @objc func orientationDidChange() {
         rotated = true
         
         /// Get fixed size
@@ -419,7 +419,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     }
     
     /// MARK: - Gesture methods
-    open func displayTimerDidFire() {
+    @objc open func displayTimerDidFire() {
         
         //stop if user is dragging
         if panGestureActive { return }
