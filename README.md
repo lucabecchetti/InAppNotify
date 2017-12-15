@@ -212,6 +212,7 @@ InAppNotify.theme = Theme(
 ## Projects using InAppNotify
 
 - Frind - [www.frind.it](https://www.frind.it) 
+- BirthReminder - [https://captainyukinoshitahachiman.github.io/BirthReminder](https://captainyukinoshitahachiman.github.io/BirthReminder/)
 
 ### Your App and InAppNotify
 I'm interested in making a list of all projects which use this library. Feel free to open an Issue on GitHub with the name and links of your project; we'll add it to this site.
