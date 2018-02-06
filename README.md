@@ -3,7 +3,7 @@
   <img src="https://user-images.githubusercontent.com/16253548/28424204-4c36af46-6d6d-11e7-95df-0cb4582093d7.png" width=400px alt="InAppNotify" title="InAppNotify">
 </p>
 
-[![Version](https://img.shields.io/badge/pod-0.1.3-blue.svg)](https://cocoapods.org/pods/InAppNotify) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://cocoapods.org/pods/InAppNotify) [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://cocoapods.org/pods/InAppNotify) [![Swift3](https://img.shields.io/badge/swift3-compatible-brightgreen.svg)](https://cocoapods.org/pods/InAppNotify)
+[![Version](https://img.shields.io/badge/pod-0.1.4-blue.svg)](https://cocoapods.org/pods/InAppNotify) [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://cocoapods.org/pods/InAppNotify) [![Platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)](https://cocoapods.org/pods/InAppNotify) [![Swift3](https://img.shields.io/badge/swift4-compatible-brightgreen.svg)](https://cocoapods.org/pods/InAppNotify)
 
 During develop of my app [Frind](http://www.frind.it), I needed to manage in app notifications like whatsapp or telegram, but i didn't find nothing that liked me, so, i created this library. Choose InAppNotify for your next project, I'll be happy to give you a little help!
 
@@ -23,7 +23,7 @@ During develop of my app [Frind](http://www.frind.it), I needed to manage in app
 ## Requirements
 
   - iOS 8+
-  - swift 3.0
+  - swift 4.0
   
 ## Main features
 Here's a highlight of the main features you can find in InAppNotify:
@@ -212,6 +212,7 @@ InAppNotify.theme = Theme(
 ## Projects using InAppNotify
 
 - Frind - [www.frind.it](https://www.frind.it) 
+- BirthReminder - [https://captainyukinoshitahachiman.github.io/BirthReminder](https://captainyukinoshitahachiman.github.io/BirthReminder/)
 
 ### Your App and InAppNotify
 I'm interested in making a list of all projects which use this library. Feel free to open an Issue on GitHub with the name and links of your project; we'll add it to this site.

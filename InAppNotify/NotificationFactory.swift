@@ -25,7 +25,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         let view = UIView()
         view.backgroundColor = InAppNotify.theme.backgroundColor
-        view.alpha           = 0.8
+        view.alpha           = 1
         view.clipsToBounds   = true
         return view
         
@@ -382,7 +382,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     
     // MARK: - Handling screen orientation
     
-    @objc func orientationDidChange() {
+    func orientationDidChange() {
         rotated = true
         
         /// Get fixed size
@@ -419,7 +419,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     }
     
     /// MARK: - Gesture methods
-    @objc open func displayTimerDidFire() {
+    open func displayTimerDidFire() {
         
         //stop if user is dragging
         if panGestureActive { return }
