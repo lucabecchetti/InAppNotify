@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7069E7B321646F50009909E9 /* UIScreen+hasNotch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7069E7B221646F50009909E9 /* UIScreen+hasNotch.swift */; };
 		B15172A21F1F8E99001FE27C /* InAppNotify.h in Headers */ = {isa = PBXBuildFile; fileRef = B15172A01F1F8E99001FE27C /* InAppNotify.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B15172AF1F1F8EAD001FE27C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15172AE1F1F8EAD001FE27C /* AppDelegate.swift */; };
 		B15172B11F1F8EAD001FE27C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15172B01F1F8EAD001FE27C /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7069E7B221646F50009909E9 /* UIScreen+hasNotch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+hasNotch.swift"; sourceTree = "<group>"; };
 		B151729D1F1F8E99001FE27C /* InAppNotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InAppNotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B15172A01F1F8E99001FE27C /* InAppNotify.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InAppNotify.h; sourceTree = "<group>"; };
 		B15172A11F1F8E99001FE27C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				B15172A01F1F8E99001FE27C /* InAppNotify.h */,
 				B15172A11F1F8E99001FE27C /* Info.plist */,
 				B15172C31F1F8ECA001FE27C /* InAppNotify.swift */,
+				7069E7B221646F50009909E9 /* UIScreen+hasNotch.swift */,
 				B15172C51F1F9010001FE27C /* NotificationFactory.swift */,
 			);
 			path = InAppNotify;
@@ -237,6 +240,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7069E7B321646F50009909E9 /* UIScreen+hasNotch.swift in Sources */,
 				B15172C61F1F9010001FE27C /* NotificationFactory.swift in Sources */,
 				B15172C41F1F8ECA001FE27C /* InAppNotify.swift in Sources */,
 			);

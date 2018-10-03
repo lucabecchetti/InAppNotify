@@ -16,7 +16,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     
     /// The visibility of statusbar before panned for InteractionType.text
     private var preVisibileBar  : Bool = true
-
+    
     /// The main controller where notification is showed
     private var maincontroller  : UIViewController?
     
@@ -251,10 +251,16 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     ///   - announcement: announcement to show
     ///   - to: a UIViewController to append the notification
     ///   - completion: a completition callback
-    open func build(forAnnouncement announcement: Announcement, to: UIViewController) {
+    open func build(forAnnouncement announcement: Announcement, to viewController: UIViewController) {
+        // Adjust size based on statusbar
+        var height: CGFloat = UIApplication.shared.isStatusBarHidden ? 70 : 80
         
-        //Adjust size based on statusbar
-        NotificationSize.height = UIApplication.shared.isStatusBarHidden ? 70 : 80
+        // Adjust size for the notch
+        if UIScreen.main.hasNotch {
+            height += 30
+        }
+        
+        NotificationSize.height = height
         
         //Reset variables
         panGestureActive        = false
@@ -266,7 +272,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         configureView(announcement)
         
         //Show the notification
-        show(to: to)
+        show(to: viewController)
         
     }
     
@@ -376,7 +382,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         [titleLabel, subtitleLabel].forEach { $0.frame.size.width = totalWidth - NotificationSize.imageSize - (NotificationSize.imageOffset * 2) }
         
-       
+        
     }
     
     
@@ -452,7 +458,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     ///
     /// - Returns: CGFloat,CGFloat
     private func getCorrectHeigthAndWidth() -> (CGFloat, CGFloat){
-
+        
         var currentWidth    = totalWidth
         var currentHeight   = totalHeight
         if rotated && backgroundView.frame.size.width == currentWidth{
@@ -531,18 +537,18 @@ open class NotificationFactory: UIView,UITextViewDelegate {
                 frame.size.height = NotificationSize.height + translation.y
             }
         } else if (!openedToReply){
-                
-                panGestureActive = false
-                let height = translation.y < -5 || canHide ? 0 : NotificationSize.height
-                duration = 0.2
-                UIView.animate(withDuration: duration, animations: {
-                    self.frame.size.height = height
-                }, completion: { _ in if translation.y < -5 {
-                    self.completion?(CallbackType.hide,nil,self.announcement!)
-                    self.removeFromSuperview()
-                    self.displayTimer.invalidate()
+            
+            panGestureActive = false
+            let height = translation.y < -5 || canHide ? 0 : NotificationSize.height
+            duration = 0.2
+            UIView.animate(withDuration: duration, animations: {
+                self.frame.size.height = height
+            }, completion: { _ in if translation.y < -5 {
+                self.completion?(CallbackType.hide,nil,self.announcement!)
+                self.removeFromSuperview()
+                self.displayTimer.invalidate()
                 }})
-                
+            
         }
         
         //Animate view
@@ -552,5 +558,5 @@ open class NotificationFactory: UIView,UITextViewDelegate {
             self.indicatorView.frame.origin.y = self.frame.height - NotificationSize.indicatorHeight - 5
         })
     }
- 
+    
 }
