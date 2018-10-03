@@ -23,14 +23,14 @@ public class InAppNotify{
     ///   - announcement: Announcement to show
     ///   - to: UIViewController to show
     ///   - completion: completition callback
-    public class func Show(_ announcement: Announcement, to: UIViewController) {
+    public class func Show(_ announcement: Announcement, to viewController: UIViewController) {
         
         //Hide previous notify if exists
         currentNotify?.hide(false)
         //Create new notify
         currentNotify = NotificationFactory()
         //Build new notify
-        currentNotify?.build(forAnnouncement : announcement, to: to)
+        currentNotify?.build(forAnnouncement: announcement, to: viewController)
 
     }
 
