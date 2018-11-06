@@ -46,6 +46,7 @@ public typealias CallbackInApp = ((CallbackType,String?,Announcement) -> ())
 public enum InteractionType:String{
     case none       = "None"
     case inputText  = "Input"
+    case expandable = "Expandable"
 }
 
 

@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         
         //------ CONFIGURATION ONLY FOR EXAMPLE ------//
         titleLabel.text         = "Hi, i'am in app notification! 😄"
-        subTitileLabel.text     = "Use me in your app, that's fun!"
+        subTitileLabel.text     = "Use me in your app, that's fun!Use me in your app, that's fun!Use me in your app, that's fun!Use me in your app, that's fun!Use me in your app, that's fun!"
         logLabel.text           = ""
         logLabel.numberOfLines  = 6
         buttonShow.setTitleColor(UIColor(red:0.90, green:0.58, blue:0.15, alpha:1.00), for: .normal)
@@ -93,9 +93,9 @@ class ViewController: UIViewController {
                 //URL of remote image
                 urlImage        : nil,
                 //Seconds before disappear
-                duration        : 3,
+                duration        : 30,
                 //Interaction type. none or text
-                interactionType : (userInteraction.isOn) ? InteractionType.inputText : InteractionType.none,
+                interactionType : (userInteraction.isOn) ? InteractionType.inputText : InteractionType.expandable,
                 //Action callback
                 action: { (type, string, announcement) in
                 
