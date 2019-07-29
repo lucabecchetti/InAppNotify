@@ -97,8 +97,8 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         let button       = UIButton()
         button.isEnabled = false
         
-        button.setTitle(InAppNotify.sendString, for: UIControlState())
-        button.setTitleColor(InAppNotify.theme.sendButtonNormalColor, for: UIControlState())
+        button.setTitle(InAppNotify.sendString, for: UIControl.State())
+        button.setTitleColor(InAppNotify.theme.sendButtonNormalColor, for: UIControl.State())
         button.setTitleColor(InAppNotify.theme.sendButtonHighlightedColor, for: .highlighted)
         return button
     }()
@@ -199,7 +199,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         buttonSend.addTarget(self, action:#selector(self.interactionSend), for: .touchUpInside)
         
         //Register for rotation change
-        NotificationCenter.default.addObserver(self, selector: #selector(self.orientationDidChange), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.orientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -208,7 +208,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
     
     deinit {
         //Deregister for rotation change
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
     
@@ -231,7 +231,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         textView.frame              = newFrame;
         buttonSend.isEnabled        = textView.text != ""
         buttonSend.frame.origin.y   = inputText.frame.origin.y+inputText.frame.size.height-buttonSend.frame.size.height
-        let stringLength:Int        = textView.text.characters.count
+        let stringLength:Int        = textView.text.count
         
         textView.scrollRangeToVisible(NSMakeRange(stringLength-1, 0))
         
@@ -503,6 +503,44 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
     }
     
+    private func setupTextInteractionFrame2(currentWidth:CGFloat,currentHeight:CGFloat){
+        
+        //Adjust frame size to all screen
+        frame.size.height = currentHeight
+        
+        subtitleLabel.numberOfLines = 5
+        subtitleLabel.sizeToFit()
+        
+        self.backgroundView.frame.size.height   = self.frame.height
+        self.gestureContainer.frame.origin.y    = self.frame.height - 20
+        self.indicatorView.frame.origin.y       = self.frame.height - NotificationSize.indicatorHeight - 5
+
+        //Check if separator exists
+        var line:UIView?                        = self.viewWithTag(1000)
+        if line == nil{
+            line = lineSeparator
+            self.addSubview(line!)
+        }
+        
+        //Set correct frame
+        line!.frame = CGRect(
+            x: 0,
+            y: max(imageView.frame.origin.y+imageView.frame.size.height,subtitleLabel.frame.origin.y+subtitleLabel.frame.size.height) + 8,
+            width: currentWidth,
+            height: 0.5
+        )
+        //Align elements
+        let topy            = line!.frame.origin.y + max(subtitleLabel.frame.size.height, 10)
+        inputText.frame     = CGRect(x: 10, y: topy, width: currentWidth-25-buttonSend.frame.size.width, height: 35)
+        buttonSend.frame    = CGRect(x: inputText.frame.size.width+15, y: topy, width: buttonSend.frame.size.width, height: 35)
+        buttonSend.isHidden = true
+        inputText.isHidden  = true
+        
+        //Show keyboard
+//        inputText.becomeFirstResponder()
+        
+    }
+    
     /// Called when user pan up or down on a notification
     @objc fileprivate func handlePanGestureRecognizer() {
         
@@ -523,7 +561,16 @@ open class NotificationFactory: UIView,UITextViewDelegate {
                     }
                     maincontroller?.tabBarController?.tabBar.isHidden = true
                     
-                }else{
+                }else if interactionType == InteractionType.expandable{
+                    if(openedToReply){ return }
+                    openedToReply = true
+                    setupTextInteractionFrame2(currentWidth: totalWidth,currentHeight: totalHeight)
+                    if maincontroller != nil && maincontroller!.tabBarController != nil{
+                        preVisibileBar = maincontroller!.tabBarController!.tabBar.isHidden
+                    }
+                    maincontroller?.tabBarController?.tabBar.isHidden = true
+                    
+                }else {
                     frame.size.height = NotificationSize.height + 12 + (translation.y) / 25
                 }
                 
