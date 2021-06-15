@@ -25,7 +25,7 @@ open class NotificationFactory: UIView,UITextViewDelegate {
         
         let view = UIView()
         view.backgroundColor = InAppNotify.theme.backgroundColor
-        view.alpha           = 0.8
+        view.alpha           = 1
         view.clipsToBounds   = true
         return view
         

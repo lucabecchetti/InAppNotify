@@ -8,6 +8,9 @@
 
 import Foundation
 
+let imageCache = NSCache<NSString, UIImage>()
+
+
 public class InAppNotify{
     
     /// Notify current dislayed
@@ -16,6 +19,8 @@ public class InAppNotify{
     public static var sendString = "Send"
     
     public static var theme:Theme = Themes.dark
+    
+    
     
     /// Function to show notify
     ///
@@ -202,11 +207,12 @@ public struct NotificationSize {
 // MARK: - UIImageView
 extension UIImageView{
     
-    
+  
     /// Set an image in UIImageView from remote URL
     ///
     /// - Parameter url: url of the image
     func setImageFromURL(stringImageUrl url: String){
+        
         
         //Placeholder image
         image = #imageLiteral(resourceName: "user_blank")
@@ -216,12 +222,23 @@ extension UIImageView{
             if let url = URL(string: url) {
                 do{
                 
-                    let data = try Data.init(contentsOf: url)
-                    
-                    //Set image in the main thread
-                    DispatchQueue.main.async {
-                        self.image = UIImage(data: data)
+                    //get from cache
+                    if let cachedImage = imageCache.object(forKey: url.absoluteString as NSString) {
+                        //Set image in the main thread
+                        DispatchQueue.main.async {
+                            self.image = cachedImage
+                        }
+                        
+                    }else{
+                        let data = try Data.init(contentsOf: url)
+                        
+                        //Set image in the main thread
+                        DispatchQueue.main.async {
+                            self.image = UIImage(data: data)
+                            imageCache.setObject(self.image!, forKey: url.absoluteString as NSString)
+                        }
                     }
+              
                     
                 }catch{
                 
